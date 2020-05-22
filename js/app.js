@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    crearGrid(200);
+    crearGrid(210);
     const grid = document.querySelector("#grid");
     let squares = Array.from(document.querySelectorAll("#grid div"));
     // Shapes
@@ -67,9 +67,24 @@ document.addEventListener('DOMContentLoaded', () => {
         desdibujar();
         posicionInicial += 10; //PosicionInicial que era 3 ahora es 13, 23, 33 y asi va bajando
         dibujar();
+        chequearEspacioAbajo();
     }
 
-
+    // Verifica que el siguiente espacio hacia abajo de cada cuadrado si contiene una clase "no-disponible", se converitra cada uno de los cuadrados de la figuraTetris en un cuadrado con la clase "no-disponible"
+    function chequearEspacioAbajo() {
+        if(posicionFiguraTetris.some(indexShape => squares[posicionInicial + indexShape + 10]
+            .classList.contains("no-disponible"))) {
+                posicionFiguraTetris.forEach(indexShape => 
+                    squares[posicionInicial + indexShape].classList.add("no-disponible"));
+                console.log("se cambio a no disponible");
+            // Una nueva figura aleatoria del tetris va a bajar 
+            random = Math.floor(Math.random() * tetris.length);
+            posicionFiguraTetris = tetris[random][rotacionActual]
+            posicionInicial = 3;
+            dibujar();
+        }        
+    }
+    
 
 
 });
@@ -78,6 +93,7 @@ function crearGrid(cant) {
     const grid = document.getElementById("grid");
     for(let i = 0; i < cant; i++) {
         const div = document.createElement("div");
+        if(i > 199) div.className = "no-disponible";
         div.textContent = [i];
         grid.appendChild(div);
     }
