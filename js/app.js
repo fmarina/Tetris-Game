@@ -74,15 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-
-    function moverHaciaAbajo() {
-        desdibujar();
-        posicionInicial += 10; //PosicionInicial que era 3 ahora es 13, 23, 33 y asi va bajando
-        dibujar();
-        chequearEspacioAbajo();
-    }
-
     // Verifica que el siguiente espacio hacia abajo de cada cuadrado si contiene una clase "no-disponible", se converitra cada uno de los cuadrados de la figuraTetris en un cuadrado con la clase "no-disponible"
     function chequearEspacioAbajo() {
         if(posicionFiguraTetris.some(indexShape => squares[posicionInicial + indexShape + 10]
@@ -95,6 +86,31 @@ document.addEventListener('DOMContentLoaded', () => {
             posicionFiguraTetris = tetris[random][rotacionActual]
             posicionInicial = 3;
             dibujar();
+        }        
+    }
+
+    function moverHaciaAbajo() {
+        desdibujar();
+        posicionInicial += 10; //PosicionInicial que era 3 ahora es 13, 23, 33 y asi va bajando
+        dibujar();
+        chequearEspacioAbajo();
+    }
+
+    // Mueve hacia la izquierda, chequeando si existe el borde o un bloqueo para mover la figura 
+    function moverHaciaIzquierda() {
+        // Desdibujamos cualquier rastro de la figuraTetris en su ubicaciones actual antes de comenzar para que tengamos una pizarra limpia
+        desdibujar();
+        
+        //Dividimos cada index del square donde esta posicionado la figuraTetris por 10. Si nos das exactamente 0 como resto significa que esta en el borde izquierdo
+        const estaEnBordeIzquierdo = posicionFiguraTetris.some(indexShape =>
+            (posicionInicial + indexShape) % 10 === 0);
+
+        if(!estaEnBordeIzquierdo) posicionInicial -=1;
+
+        //Verificamos que no haya una pieza en el lado izquierdo donde nos queremos mover. Si hay lo empujamos hacia atrás un espacio para que parezca que no se ha movido
+        if(posicionFiguraTetris.some(indexShape => 
+            squares[posicionInicial + indexShape].classList.contains("no-disponible"))) {
+                posicionInicial += 1;
         }        
     }
 
