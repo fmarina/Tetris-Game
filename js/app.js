@@ -39,16 +39,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // El array de rotacion comienza en el square con el indice 3
     let posicionInicial = 3;
-    let posicionFiguraTetris = tetris[0][0];
+    // Seleccionamos la primera rotacion de la figura del tetris. Ejemplo tShape[0]
+    let rotacionActual = 0
+    // selecciona la figura del tetris aleatoriamente
+    let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4    
 
-    dibujar();    
+    let posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
 
     // Dibujamos Tetris Shapes
     function dibujar() {
         posicionFiguraTetris.forEach(indexShape => {            
             squares[posicionInicial + indexShape].classList.add('figura-tetris');  
         });
+    }
 
+    function desdibujar() {
+        posicionFiguraTetris.forEach(indexShape => {
+            squares[posicionInicial + indexShape].classList.remove('figura-tetris');
+        });
     }
 
 });
