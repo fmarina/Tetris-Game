@@ -61,9 +61,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Hace que la figura del tetris baje cada 1 segundo. Se asigna a la variable timerId para que luego se pueda frenar
-    timerId = setInterval(moverAbajo, 1000);
+    timerId = setInterval(moverHaciaAbajo, 1000);
 
-    function moverAbajo() {
+    document.addEventListener("keydown", keyEvent);
+
+    function keyEvent(e) {
+        switch(e.keyCode) {
+            case 37: moverHaciaIzquierda(); break;
+            case 38: moverHaciaArriba(); break;
+            case 39: moverHaciaDerecha(); break;
+            case 40: moverHaciaAbajo(); break;
+        }
+    }
+
+
+
+    function moverHaciaAbajo() {
         desdibujar();
         posicionInicial += 10; //PosicionInicial que era 3 ahora es 13, 23, 33 y asi va bajando
         dibujar();
@@ -84,6 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dibujar();
         }        
     }
+
+
     
 
 
