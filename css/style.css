@@ -3,3 +3,17 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+#grid {
+    width: 200px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(159, 93, 221);
+}
+
+#grid div {
+    width: 20px;
+    height: 20px;    
+    background-color: cornflowerblue;
+}
