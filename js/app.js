@@ -53,11 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Desdibujamos tetris eliminandole la clase puesta en dibujar()
     function desdibujar() {
         posicionFiguraTetris.forEach(indexShape => {
             squares[posicionInicial + indexShape].classList.remove('figura-tetris');
         });
     }
+
+    // Hace que la figura del tetris baje cada 1 segundo. Se asigna a la variable timerId para que luego se pueda frenar
+    timerId = setInterval(moverAbajo, 1000);
+
+    function moverAbajo() {
+        desdibujar();
+        posicionInicial += 10; //PosicionInicial que era 3 ahora es 13, 23, 33 y asi va bajando
+        dibujar();
+    }
+
+
+
 
 });
 
