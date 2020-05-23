@@ -63,16 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hace que la figura del tetris baje cada 1 segundo. Se asigna a la variable timerId para que luego se pueda frenar
     timerId = setInterval(moverHaciaAbajo, 1000);
 
-    document.addEventListener("keydown", keyEvent);
-
     function keyEvent(e) {
         switch(e.keyCode) {
             case 37: moverHaciaIzquierda(); break;
-            case 38: moverHaciaArriba(); break;
+            // case 38: moverHaciaArriba(); break;
             case 39: moverHaciaDerecha(); break;
-            case 40: moverHaciaAbajo(); break;
+            // case 40: moverHaciaAbajo(); break;
         }
     }
+
+    document.addEventListener("keydown", keyEvent);
 
     // Verifica que el siguiente espacio hacia abajo de cada cuadrado si contiene una clase "no-disponible", se converitra cada uno de los cuadrados de la figuraTetris en un cuadrado con la clase "no-disponible"
     function chequearEspacioAbajo() {
@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .classList.contains("no-disponible"))) {
                 posicionFiguraTetris.forEach(indexShape => 
                     squares[posicionInicial + indexShape].classList.add("no-disponible"));
-                console.log("se cambio a no disponible");
             // Una nueva figura aleatoria del tetris va a bajar 
             random = Math.floor(Math.random() * tetris.length);
             posicionFiguraTetris = tetris[random][rotacionActual]
@@ -95,12 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dibujar();
         chequearEspacioAbajo();
     }
-
+   
     // Mueve hacia la izquierda, chequeando si existe el borde o un bloqueo para mover la figura 
     function moverHaciaIzquierda() {
         // Desdibujamos cualquier rastro de la figuraTetris en su ubicaciones actual antes de comenzar para que tengamos una pizarra limpia
         desdibujar();
-        
         //Dividimos cada index del square donde esta posicionado la figuraTetris por 10. Si nos das exactamente 0 como resto significa que esta en el borde izquierdo
         const estaEnBordeIzquierdo = posicionFiguraTetris.some(indexShape =>
             (posicionInicial + indexShape) % 10 === 0);
@@ -111,12 +109,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if(posicionFiguraTetris.some(indexShape => 
             squares[posicionInicial + indexShape].classList.contains("no-disponible"))) {
                 posicionInicial += 1;
-        }        
+        }
+        //re dibujamos la figura en su nueva posicion      
+        dibujar();  
     }
 
+    // Mueve hacia la derecha, chequeando si existe el borde o un bloqueo para mover la figura 
+    function moverHaciaDerecha() {
+        desdibujar();
+        const estaEnBordeDerecho = posicionFiguraTetris.some(indexShape => 
+            (posicionInicial + indexShape) % 10 === 10 -1);
 
-    
+        if(!estaEnBordeDerecho) posicionInicial += 1;
 
+        if(posicionFiguraTetris.some(indexShape => squares[posicionInicial + indexShape]
+            .classList.contains("no-disponible"))) {
+                posicionInicial -= 1;
+        }
+        dibujar();
+    }
 
 });
 
