@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function keyEvent(e) {
         switch(e.keyCode) {
-            case 37: moverHaciaIzquierda(); break;
-            // case 38: moverHaciaArriba(); break;
-            case 39: moverHaciaDerecha(); break;
-            // case 40: moverHaciaAbajo(); break;
+            case 37:  moverHaciaIzquierda(); break;
+            case 38:  rotarFigura();         break;
+            case 39:  moverHaciaDerecha();   break;
+            case 40:  moverHaciaAbajo();     break;
         }
     }
 
@@ -126,6 +126,20 @@ document.addEventListener('DOMContentLoaded', () => {
             .classList.contains("no-disponible"))) {
                 posicionInicial -= 1;
         }
+        dibujar();
+    }
+
+    function rotarFigura() {
+        desdibujar();
+        rotacionActual ++; // incrementa para mover hacia el siguiente item en nuestro array
+
+        // Si el indice de rotacionActual es igual a la cantidad de rotaciones en nuestra figura actual, volvemos al primer item en nuestro array que es la primera rotacion. Es decir si la rotacionActual obtiene 4 vuelve a 0
+        if(rotacionActual === posicionFiguraTetris.length) { 
+            rotacionActual = 0
+        }
+        // Si es false simplemente pasamos esa nueva rotacionActual a el contador de tetris
+        posicionFiguraTetris = tetris[random][rotacionActual];
+        // y volvemos a dibujar
         dibujar();
     }
 
