@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.container-grid {
+    display: flex;
+}
+
 #grid {
     width: 200px;
     height: 400px;
@@ -19,4 +23,18 @@
 
 .figura-tetris {    
     background-color: cornflowerblue;
+}
+
+#mini-grid {
+    width: 120px;
+    height: 160px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: crimson;
+    margin-left: 40px;
+}
+
+#mini-grid div {
+    width: 20px;
+    height: 20px;
 }

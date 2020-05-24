@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     crearGrid(210);
+    crearMiniGrid(16)
     const grid = document.querySelector("#grid");
     let squares = Array.from(document.querySelectorAll("#grid div"));
     // Shapes
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 1, 10, 11],
         [0, 1, 10, 11],
         [0, 1, 10, 11],
-        [0, 1, 10, 11],
+        [0, 1, 10, 11]
     ];
     const iShape = [
         [1, 11, 21, 31],
@@ -42,8 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seleccionamos la primera rotacion de la figura del tetris. Ejemplo tShape[0]
     let rotacionActual = 0
     // selecciona la figura del tetris aleatoriamente
-    let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4    
-
+    let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4   
+    
     let posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
 
     // Dibujamos Tetris Shapes
@@ -76,7 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Verifica que el siguiente espacio hacia abajo de cada cuadrado si contiene una clase "no-disponible", se converitra cada uno de los cuadrados de la figuraTetris en un cuadrado con la clase "no-disponible"
     function chequearEspacioAbajo() {
-        if(posicionFiguraTetris.some(indexShape => squares[posicionInicial + indexShape + 10]
+        if(posicionFiguraTetris.some(indexShape => 
+            squares[posicionInicial + indexShape + 10]
             .classList.contains("no-disponible"))) {
                 posicionFiguraTetris.forEach(indexShape => 
                     squares[posicionInicial + indexShape].classList.add("no-disponible"));
@@ -118,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function moverHaciaDerecha() {
         desdibujar();
         const estaEnBordeDerecho = posicionFiguraTetris.some(indexShape => 
-            (posicionInicial + indexShape) % 10 === 10 -1);
+            (posicionInicial + indexShape) % 10 === 10 - 1);
 
         if(!estaEnBordeDerecho) posicionInicial += 1;
 
@@ -132,15 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function rotarFigura() {
         desdibujar();
         rotacionActual ++; // incrementa para mover hacia el siguiente item en nuestro array
-
         // Si el indice de rotacionActual es igual a la cantidad de rotaciones en nuestra figura actual, volvemos al primer item en nuestro array que es la primera rotacion. Es decir si la rotacionActual obtiene 4 vuelve a 0
+
         if(rotacionActual === posicionFiguraTetris.length) { 
-            rotacionActual = 0
-        }
+                rotacionActual = 0; 
+        } 
+
         // Si es false simplemente pasamos esa nueva rotacionActual a el contador de tetris
-        posicionFiguraTetris = tetris[random][rotacionActual];
+        console.log("1. FiguraRandomInicio", figuraRandom, " - Rotacion", rotacionActual);
+        posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
+        
         // y volvemos a dibujar
-        dibujar();
+        dibujar();                 
+        console.log("2. FiguraRandomInicio", figuraRandom, " - Rotacion", rotacionActual);
+
     }
 
 });
@@ -152,5 +159,13 @@ function crearGrid(cant) {
         if(i > 199) div.className = "no-disponible";
         div.textContent = [i];
         grid.appendChild(div);
+    }
+}
+
+function crearMiniGrid(cant) {
+    const mini_grid = document.getElementById("mini-grid");
+    for(let i = 0; i < cant; i++) {
+        const div = document.createElement("div");
+        mini_grid.appendChild(div);
     }
 }
