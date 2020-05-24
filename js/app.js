@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Muestra cual es la proxima figura de tetris que aparecerá en el mini-grid
     const squaresMiniGrid = document.querySelectorAll("#mini-grid div");
-    let displayIndex = 0;
+    let displayIndex = 2;
     
     //figuras de tetris sin rotacion
     const proximaFiguraTetris = [
@@ -172,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
             squaresMiniGrid[displayIndex + indexShape].classList.add("figura-tetris");
         });
     }
-
 
 });
 
