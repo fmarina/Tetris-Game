@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     crearMiniGrid(42);
     const grid = document.querySelector("#grid");
     let squares = Array.from(document.querySelectorAll("#grid div"));
+    let proximoAleatorio = 0;
    
     // Shapes
     const lShape = [
@@ -86,10 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 posicionFiguraTetris.forEach(indexShape => 
                     squares[posicionInicial + indexShape].classList.add("no-disponible"));
             // Una nueva figura aleatoria del tetris va a bajar
-            figuraRandom = Math.floor(Math.random() * tetris.length);
+            figuraRandom = proximoAleatorio;
+            proximoAleatorio = Math.floor(Math.random() * tetris.length);
             posicionFiguraTetris = tetris[figuraRandom][rotacionActual]
             posicionInicial = 3;
-            dibujar();            
+            dibujar();      
+            mostrarProximaFigura();      
         }        
     }
 
@@ -146,6 +149,30 @@ document.addEventListener('DOMContentLoaded', () => {
         posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
         dibujar(); // volvemos a dibujar
     }
+
+    // Muestra cual es la proxima figura de tetris que aparecerá en el mini-grid
+    const squaresMiniGrid = document.querySelectorAll("#mini-grid div");
+    let displayIndex = 0;
+    
+    //figuras de tetris sin rotacion
+    const proximaFiguraTetris = [
+        [1, 2, 8, 15],  // L
+        [8, 9, 14, 15], // Z
+        [1, 7, 8, 9],   // T
+        [0, 1, 7, 8],   // O
+        [1, 8, 15, 22]  // |
+    ];
+
+    // mostrar proxima figura tetris en mini-grid
+    function mostrarProximaFigura() {
+        // eliminar cualquier rastro de figura tetris de toda la cuadrícula
+        squaresMiniGrid.forEach(square => { square.classList.remove("figura-tetris") });
+        //La proxima figura que aparezca se le asigna la clase figura-tetris.
+        proximaFiguraTetris[proximoAleatorio].forEach(indexShape => {
+            squaresMiniGrid[displayIndex + indexShape].classList.add("figura-tetris");
+        });
+    }
+
 
 });
 
