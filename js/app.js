@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     crearGrid(210);
-    crearMiniGrid(16)
+    crearMiniGrid(42);
     const grid = document.querySelector("#grid");
     let squares = Array.from(document.querySelectorAll("#grid div"));
+   
     // Shapes
     const lShape = [
         [1, 2, 11, 21],
@@ -40,8 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // El array de rotacion comienza en el square con el indice 3
     let posicionInicial = 3;
+
     // Seleccionamos la primera rotacion de la figura del tetris. Ejemplo tShape[0]
     let rotacionActual = 0
+
     // selecciona la figura del tetris aleatoriamente
     let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4   
     
@@ -82,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .classList.contains("no-disponible"))) {
                 posicionFiguraTetris.forEach(indexShape => 
                     squares[posicionInicial + indexShape].classList.add("no-disponible"));
-            // Una nueva figura aleatoria del tetris va a bajar 
-            random = Math.floor(Math.random() * tetris.length);
-            posicionFiguraTetris = tetris[random][rotacionActual]
+            // Una nueva figura aleatoria del tetris va a bajar
+            figuraRandom = Math.floor(Math.random() * tetris.length);
+            posicionFiguraTetris = tetris[figuraRandom][rotacionActual]
             posicionInicial = 3;
-            dibujar();
+            dibujar();            
         }        
     }
 
@@ -139,15 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if(rotacionActual === posicionFiguraTetris.length) { 
                 rotacionActual = 0; 
         } 
-
         // Si es false simplemente pasamos esa nueva rotacionActual a el contador de tetris
-        console.log("1. FiguraRandomInicio", figuraRandom, " - Rotacion", rotacionActual);
         posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
-        
-        // y volvemos a dibujar
-        dibujar();                 
-        console.log("2. FiguraRandomInicio", figuraRandom, " - Rotacion", rotacionActual);
-
+        dibujar(); // volvemos a dibujar
     }
 
 });
@@ -166,6 +163,7 @@ function crearMiniGrid(cant) {
     const mini_grid = document.getElementById("mini-grid");
     for(let i = 0; i < cant; i++) {
         const div = document.createElement("div");
+        div.textContent = i;
         mini_grid.appendChild(div);
     }
 }
