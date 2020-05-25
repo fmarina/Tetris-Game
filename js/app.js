@@ -65,9 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hace que la figura del tetris baje cada 1 segundo. Se asigna a la variable timerId para que luego se pueda frenar
-    timerId = setInterval(moverHaciaAbajo, 1000);
-
     function keyEvent(e) {
         switch(e.keyCode) {
             case 37:  moverHaciaIzquierda(); break;
@@ -172,6 +169,25 @@ document.addEventListener('DOMContentLoaded', () => {
             squaresMiniGrid[displayIndex + indexShape].classList.add("figura-tetris");
         });
     }
+
+    let startButton = document.getElementById("start-btn");
+    let timerId;
+
+    startButton.addEventListener('click', () => {
+        // si el timerId no es null, pausamos el juego y definimos timerId en null
+        if(timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        }
+        else {
+            // si es null, start juego, dibujamos la figura del tetris en la posicion actual predeterminada
+            dibujar();
+            timerId = setInterval(moverHaciaAbajo, 1000);
+            figuraRandom = Math.floor(Math.random() * tetris.length);
+            mostrarProximaFigura();
+        }
+
+    });
 
 });
 
