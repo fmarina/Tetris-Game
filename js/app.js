@@ -2,11 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     crearGrid(210);
     crearMiniGrid(42);
+
+/* VARIABLES PARA LAS FIGURAS TETRIS */
     const grid = document.querySelector("#grid");
-    let squares = Array.from(document.querySelectorAll("#grid div"));
-    let proximoAleatorio = 0;
-   
-    // Shapes
+    let squares = Array.from(document.querySelectorAll("#grid div"));   
+
+    // Figuras Tetris
     const lShape = [
         [1, 2, 11, 21],
         [10, 11, 12, 22],
@@ -22,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tShape = [
         [1, 10, 11, 12],
         [1, 11, 12, 21],
-        [1, 10, 11, 21],
-        [10, 11, 12, 21]
+        [10, 11, 12, 21],
+        [1, 10, 11, 21]        
     ];
     const oShape = [
         [0, 1, 10, 11],
@@ -36,20 +37,42 @@ document.addEventListener('DOMContentLoaded', () => {
         [10, 11, 12, 13],
         [1, 11, 21, 31],
         [10, 11, 12, 13]
-    ];
+    ];    
 
     const tetris = [lShape, zShape, tShape, oShape, iShape];
 
     // El array de rotacion comienza en el square con el indice 3
-    let posicionInicial = 3;
-
-    // Seleccionamos la primera rotacion de la figura del tetris. Ejemplo tShape[0]
-    let rotacionActual = 0
-
+    let posicionInicial = 3;    
+    // Seleccionamos la primera rotacion de la figura del tetris. Por ejemplo tShape[0]
+    let rotacionActual = 0    
     // selecciona la figura del tetris aleatoriamente
-    let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4   
-    
+    let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4
     let posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
+
+/* VARIABLES PARA EL MINI-GRID */
+    // Muestra cual es la proxima figura de tetris que aparecerá en el mini-grid
+    const squaresMiniGrid = document.querySelectorAll("#mini-grid div");
+    let displayIndex = 2;
+    let proximoAleatorio = 0;
+    //figuras de tetris sin rotacion
+    const proximaFiguraTetris = [
+        [1, 2, 8, 15],  // L
+        [8, 9, 14, 15], // Z
+        [1, 7, 8, 9],   // T
+        [0, 1, 7, 8],   // O
+        [1, 8, 15, 22]  // |
+    ];
+
+/* VARIABLES BOTON START/PAUSE */
+    let startButton = document.getElementById("start-btn");
+    let timerId;    
+
+/* VARIABLES PUNTAJE */
+    let mostrarPuntaje = document.querySelector(".score");
+    let puntaje = 0;
+
+
+/*FUNCIONES PARA LAS FIGURAS TETRIS*/
 
     // Dibujamos Tetris Shapes
     function dibujar() {
@@ -149,18 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dibujar(); // volvemos a dibujar
     }
 
-    // Muestra cual es la proxima figura de tetris que aparecerá en el mini-grid
-    const squaresMiniGrid = document.querySelectorAll("#mini-grid div");
-    let displayIndex = 2;
-    
-    //figuras de tetris sin rotacion
-    const proximaFiguraTetris = [
-        [1, 2, 8, 15],  // L
-        [8, 9, 14, 15], // Z
-        [1, 7, 8, 9],   // T
-        [0, 1, 7, 8],   // O
-        [1, 8, 15, 22]  // |
-    ];
+/* FUNCION DEL MINI-GRID */
 
     // mostrar proxima figura tetris en mini-grid
     function mostrarProximaFigura() {
@@ -172,8 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    let startButton = document.getElementById("start-btn");
-    let timerId;
+/* FUNCION BOTON START/PAUSE */  
 
     startButton.addEventListener('click', () => {
         // si el timerId no es null, pausamos el juego y definimos timerId en null
@@ -190,15 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* Cuando el usuario logra llenar una fila completa con figuras tetris, tenemos que 
-    - incrementar el puntaje
-    - mostrar la puntuación en nuestro navegador 
-    - eliminar la fila de nuestro grid.
-    - agregar una nueva fila nueva a nuestro grid para que no parezca encogerse de tamaño
-    */
-    let mostrarPuntaje = document.querySelector(".score");
-    let puntaje = 0;
-    
+/* PUNTAJE */
+
+    /* Cuando el usuario logra llenar una fila completa con figuras tetris, tenemos que incrementar el puntaje,mostrar la puntuación en nuestro navegador, 3. eliminar la fila de nuestro grid, agregar una nueva fila nueva a nuestro grid para que no parezca encogerse de tamaño */   
     function agregarPuntaje() {
         for (let i = 0; i < 199; i += 10) {
             const filaCompleta = [ 
@@ -216,7 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 
                 const filaEliminada = squares.splice(i, 10); // eliminamos la fila completa
-                console.log("filaEliminada", filaEliminada);
                 // appendeamos con concat esos diez squares eliminados de filaEliminada.
                 squares = filaEliminada.concat(squares);
                 squares.forEach(celda => grid.appendChild(celda));
