@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Desdibujamos tetris eliminandole la clase puesta en dibujar()
     function desdibujar() {
         posicionFiguraTetris.forEach(indexShape => {
-            squares[posicionInicial + indexShape].classList.remove('figura-tetris');
             squares[posicionInicial + indexShape].style.backgroundColor = "";
+            squares[posicionInicial + indexShape].classList.remove('figura-tetris');
         });
     }
 
@@ -199,7 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* FUNCION BOTON START/PAUSE */  
 
-    startButton.addEventListener('click', () => {
+    startButton.addEventListener('click', startPause);
+    document.addEventListener("keydown", function() { if(event.which == 32) startPause() });
+    
+    function startPause() {
         // si el timerId no es null, pausamos el juego y definimos timerId en null
         if(timerId) {
             clearInterval(timerId);
@@ -212,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
             figuraRandom = Math.floor(Math.random() * tetris.length);
             mostrarProximaFigura();
         }
-    });
+    }
 
 /* PUNTAJE */
 
