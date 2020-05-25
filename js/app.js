@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         [10, 20, 21, 22]
     ];
     const zShape = [
-        [11, 12, 20, 21],
-        [0, 10, 11, 21],
         [10, 11, 21, 22],
+        [0, 10, 11, 21],
+        [11, 12, 20, 21],
         [2, 11, 12, 21]
     ];
     const tShape = [
@@ -90,7 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
             posicionInicial = 3;
             dibujar();      
             mostrarProximaFigura();   
-            agregarPuntaje();   
+            agregarPuntaje();
+            gameOver();   
         }        
     }
 
@@ -223,6 +224,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    function gameOver() {
+        if(posicionFiguraTetris.some(indexShape => squares[posicionInicial + indexShape].
+            classList.contains("no-disponible"))) {                
+                mostrarPuntaje.innerHTML = "END";
+                clearInterval(timerId); // deja de llamar a la funcion moverHaciaAbajo
+        }
+    }
+
 
 });
 
