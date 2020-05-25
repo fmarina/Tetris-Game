@@ -261,8 +261,10 @@ function crearGrid(cant) {
     const grid = document.getElementById("grid");
     for(let i = 0; i < cant; i++) {
         const div = document.createElement("div");
-        if(i > 199) div.className = "no-disponible";
-        div.textContent = [i];
+        if(i > 199){ 
+            div.className = "no-disponible";
+            div.style.border ="1px solid transparent"
+        }
         grid.appendChild(div);
     }
 }
@@ -271,7 +273,6 @@ function crearMiniGrid(cant) {
     const mini_grid = document.getElementById("mini-grid");
     for(let i = 0; i < cant; i++) {
         const div = document.createElement("div");
-        div.textContent = i;
         mini_grid.appendChild(div);
     }
 }

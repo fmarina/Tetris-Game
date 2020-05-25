@@ -13,16 +13,17 @@
     height: 400px;
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(159, 93, 221);
+    background-color: rgb(26, 23, 58);
 }
 
 #grid div {
     width: 20px;
     height: 20px;    
+    border: 1px solid rgb(72, 64, 160);    
 }
 
 .figura-tetris {    
-    background-color: cornflowerblue;
+    background-color: cornflowerblue;    
 }
 
 #mini-grid {
