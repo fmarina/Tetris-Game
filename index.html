@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,15 +14,18 @@
 
         <div class="container-board">
             <div class="container-controls">
+                <div id="mini-grid"></div>
+                
                 <div id="score-display">
-                    <h2>Score: <span class="score">0</span></h2>
+                    <h2>SCORE </h2>
+                    <h2 class="score">0</h2>
                 </div>
-                <button id="start-btn">Start / Pause</button>
+
+                <button id="start-btn">Start / Pause</button>                
             </div>
 
             <div class="container-grid">
-                <div id="grid"></div>
-                <div id="mini-grid"></div>
+                <div id="grid"></div>                
             </div>
         </div>
 
