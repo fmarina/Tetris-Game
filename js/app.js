@@ -48,11 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // selecciona la figura del tetris aleatoriamente
     let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4
     let posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
+    const colors = [
+        "#DD7A27", // naranja
+        "#F40505", // red
+        "#A30A90", // purple
+        "#3ADD27", // green
+        "#3A38E2"  // blue
+    ];
 
 /* VARIABLES PARA EL MINI-GRID */
     // Muestra cual es la proxima figura de tetris que aparecerá en el mini-grid
     const squaresMiniGrid = document.querySelectorAll("#mini-grid div");
-    let displayIndex = 2;
+    let displayIndex = 9;
     let proximoAleatorio = 0;
     //figuras de tetris sin rotacion
     const proximaFiguraTetris = [
@@ -78,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function dibujar() {
         posicionFiguraTetris.forEach(indexShape => {            
             squares[posicionInicial + indexShape].classList.add('figura-tetris');  
+            squares[posicionInicial + indexShape].style.backgroundColor = colors[figuraRandom];
         });
     }
 
@@ -85,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function desdibujar() {
         posicionFiguraTetris.forEach(indexShape => {
             squares[posicionInicial + indexShape].classList.remove('figura-tetris');
+            squares[posicionInicial + indexShape].style.backgroundColor = "";
         });
     }
 
@@ -177,10 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // mostrar proxima figura tetris en mini-grid
     function mostrarProximaFigura() {
         // eliminar cualquier rastro de figura tetris de toda la cuadrícula
-        squaresMiniGrid.forEach(square => { square.classList.remove("figura-tetris") });
+        squaresMiniGrid.forEach(square => { 
+            square.classList.remove("figura-tetris") 
+            square.style.backgroundColor = "";
+        });
         //La proxima figura que aparezca se le asigna la clase figura-tetris.
         proximaFiguraTetris[proximoAleatorio].forEach(indexShape => {
             squaresMiniGrid[displayIndex + indexShape].classList.add("figura-tetris");
+            squaresMiniGrid[displayIndex + indexShape].style.backgroundColor = colors[proximoAleatorio];
         });
     }
 
@@ -218,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 filaCompleta.forEach(index => {                    
                     squares[index].classList.remove("no-disponible");
                     squares[index].classList.remove("figura-tetris");
+                    squares[index].style.backgroundColor = "";
                 });
                 
                 const filaEliminada = squares.splice(i, 10); // eliminamos la fila completa
