@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
             posicionFiguraTetris = tetris[figuraRandom][rotacionActual]
             posicionInicial = 3;
             dibujar();      
-            mostrarProximaFigura();      
+            mostrarProximaFigura();   
+            agregarPuntaje();   
         }        
     }
 
@@ -186,8 +187,42 @@ document.addEventListener('DOMContentLoaded', () => {
             figuraRandom = Math.floor(Math.random() * tetris.length);
             mostrarProximaFigura();
         }
-
     });
+
+    /* Cuando el usuario logra llenar una fila completa con figuras tetris, tenemos que 
+    - incrementar el puntaje
+    - mostrar la puntuación en nuestro navegador 
+    - eliminar la fila de nuestro grid.
+    - agregar una nueva fila nueva a nuestro grid para que no parezca encogerse de tamaño
+    */
+    let mostrarPuntaje = document.querySelector(".score");
+    let puntaje = 0;
+    
+    function agregarPuntaje() {
+        for (let i = 0; i < 199; i += 10) {
+            const filaCompleta = [ 
+                i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9
+            ];
+            
+            if(filaCompleta.every(index => squares[index].classList.contains("no-disponible")))
+            {
+                puntaje += 10;
+                mostrarPuntaje.innerHTML = puntaje
+                
+                filaCompleta.forEach(index => {                    
+                    squares[index].classList.remove("no-disponible");
+                    squares[index].classList.remove("figura-tetris");
+                });
+                
+                const filaEliminada = squares.splice(i, 10); // eliminamos la fila completa
+                console.log("filaEliminada", filaEliminada);
+                // appendeamos con concat esos diez squares eliminados de filaEliminada.
+                squares = filaEliminada.concat(squares);
+                squares.forEach(celda => grid.appendChild(celda));
+
+            }
+        }
+    }
 
 });
 
