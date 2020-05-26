@@ -49,12 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let figuraRandom = Math.floor(Math.random() * tetris.length); // 0 1 2 3 4
     let posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
     const colors = [
-        "#DD7A27", // naranja
-        "#F40505", // red
-        "#A30A90", // purple
+        "#F45B05", // naranja
+        "#F2F405", // yellow
+        "#F405BF", // purple
         "#3ADD27", // green
-        "#3A38E2"  // blue
-    ];
+        "#05DDF4"  // blue
+    ];   
 
 /* VARIABLES PARA EL MINI-GRID */
     // Muestra cual es la proxima figura de tetris que aparecerá en el mini-grid
@@ -78,14 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let mostrarPuntaje = document.querySelector(".score");
     let puntaje = 0;
 
-
 /*FUNCIONES PARA LAS FIGURAS TETRIS*/
-
     // Dibujamos Tetris Shapes
     function dibujar() {
         posicionFiguraTetris.forEach(indexShape => {            
-            squares[posicionInicial + indexShape].classList.add('figura-tetris');  
-            squares[posicionInicial + indexShape].style.backgroundColor = colors[figuraRandom];
+            squares[posicionInicial + indexShape].classList.add('figura-tetris'); 
+            squares[posicionInicial + indexShape]
+            .style.backgroundColor = colors[figuraRandom];
+            squares[posicionInicial + indexShape].style.boxShadow = "-1px 1px 3px #fff inset";
         });
     }
 
@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function desdibujar() {
         posicionFiguraTetris.forEach(indexShape => {
             squares[posicionInicial + indexShape].style.backgroundColor = "";
+            squares[posicionInicial + indexShape].style.boxShadow = "";
             squares[posicionInicial + indexShape].classList.remove('figura-tetris');
         });
     }
@@ -209,14 +210,16 @@ document.addEventListener('DOMContentLoaded', () => {
             timerId = null;
         }
         else {
+            start = true;
             // si es null, start juego, dibujamos la figura del tetris en la posicion actual predeterminada
             dibujar();
             timerId = setInterval(moverHaciaAbajo, 1000);
-            figuraRandom = Math.floor(Math.random() * tetris.length);
+            // proximoAleatorio = Math.floor(Math.random() * tetris.length);
             mostrarProximaFigura();
-        }
+                    
+        }        
     }
-
+    
 /* PUNTAJE */
 
     /* Cuando el usuario logra llenar una fila completa con figuras tetris, tenemos que incrementar el puntaje,mostrar la puntuación en nuestro navegador, 3. eliminar la fila de nuestro grid, agregar una nueva fila nueva a nuestro grid para que no parezca encogerse de tamaño */   
@@ -229,19 +232,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if(filaCompleta.every(index => squares[index].classList.contains("no-disponible")))
             {
                 puntaje += 10;
-                mostrarPuntaje.innerHTML = puntaje
+                mostrarPuntaje.innerHTML = puntaje;                
                 
-                filaCompleta.forEach(index => {                    
+                filaCompleta.forEach(index => {                   
                     squares[index].classList.remove("no-disponible");
                     squares[index].classList.remove("figura-tetris");
                     squares[index].style.backgroundColor = "";
+                    squares[index].style.boxShadow = "";
                 });
                 
                 const filaEliminada = squares.splice(i, 10); // eliminamos la fila completa
                 // appendeamos con concat esos diez squares eliminados de filaEliminada.
                 squares = filaEliminada.concat(squares);
                 squares.forEach(celda => grid.appendChild(celda));
-
             }
         }
     }
@@ -251,6 +254,8 @@ document.addEventListener('DOMContentLoaded', () => {
             classList.contains("no-disponible"))) {                
                 mostrarPuntaje.innerHTML = "END";
                 clearInterval(timerId); // deja de llamar a la funcion moverHaciaAbajo
+                alert("Has perdido. Intentalo nuevamente");
+                location.reload();
         }
     }
 
