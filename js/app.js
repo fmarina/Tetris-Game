@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const colors = [
         "#F45B05", // naranja
         "#F2F405", // yellow
-        "#F405BF", // purple
+        "#F405BF", // pink
         "#3ADD27", // green
         "#05DDF4"  // blue
     ];   
@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let puntaje = 0;
 
 /*FUNCIONES PARA LAS FIGURAS TETRIS*/
+
     // Dibujamos Tetris Shapes
     function dibujar() {
         posicionFiguraTetris.forEach(indexShape => {            
@@ -111,13 +112,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Verifica que el siguiente espacio hacia abajo de cada cuadrado si contiene una clase "no-disponible", se converitra cada uno de los cuadrados de la figuraTetris en un cuadrado con la clase "no-disponible"
     function chequearEspacioAbajo() {
-        if(posicionFiguraTetris.some(indexShape => 
+        if(posicionFiguraTetris.some(indexShape =>
             squares[posicionInicial + indexShape + 10]
-            .classList.contains("no-disponible"))) {
-                posicionFiguraTetris.forEach(indexShape => 
-                    squares[posicionInicial + indexShape].classList.add("no-disponible"));
-            // Una nueva figura aleatoria del tetris va a bajar
-            figuraRandom = proximoAleatorio;
+            .classList.contains("no-disponible"))) 
+        {
+            posicionFiguraTetris.forEach(indexShape =>
+                squares[posicionInicial + indexShape].classList.add("no-disponible"));
+            
+            figuraRandom = proximoAleatorio;// Una nueva figura tetris aleatoria va a bajar
             proximoAleatorio = Math.floor(Math.random() * tetris.length);
             posicionFiguraTetris = tetris[figuraRandom][rotacionActual]
             posicionInicial = 3;
@@ -135,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chequearEspacioAbajo();
     }
    
-    // Mueve hacia la izquierda, chequeando si existe el borde o un bloqueo para mover la figura 
+    // Mueve hacia la izquierda, chequeando si existe el borde o un bloqueo
     function moverHaciaIzquierda() {
         // Desdibujamos cualquier rastro de la figuraTetris en su ubicaciones actual antes de comenzar para que tengamos una pizarra limpia
         desdibujar();
@@ -172,11 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function rotarFigura() {
         desdibujar();
         rotacionActual ++; // incrementa para mover hacia el siguiente item en nuestro array
+        
         // Si el indice de rotacionActual es igual a la cantidad de rotaciones en nuestra figura actual, volvemos al primer item en nuestro array que es la primera rotacion. Es decir si la rotacionActual obtiene 4 vuelve a 0
-
-        if(rotacionActual === posicionFiguraTetris.length) { 
-                rotacionActual = 0; 
-        } 
+        if(rotacionActual === posicionFiguraTetris.length) rotacionActual = 0;
+        
         // Si es false simplemente pasamos esa nueva rotacionActual a el contador de tetris
         posicionFiguraTetris = tetris[figuraRandom][rotacionActual];
         dibujar(); // volvemos a dibujar
@@ -215,8 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dibujar();
             timerId = setInterval(moverHaciaAbajo, 1000);
             // proximoAleatorio = Math.floor(Math.random() * tetris.length);
-            mostrarProximaFigura();
-                    
+            mostrarProximaFigura();                    
         }        
     }
     
@@ -258,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 location.reload();
         }
     }
-
 
 });
 
